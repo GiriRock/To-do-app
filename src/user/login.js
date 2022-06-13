@@ -17,7 +17,7 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const {login, googleLogin, fbLogin} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
 
   const loginHandler = (email,password)=>{
       if(email != null && password != null){

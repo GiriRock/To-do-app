@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Keyboard } from 'react-native'
 import React, { useState , useEffect, useContext } from 'react';
 import Task from '../components/Task';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -19,6 +19,7 @@ const HomePage = () => {
       });
       setTask('');
       setLoading(true)
+      Keyboard.dismiss
     }
 
     const fetchTasks = async () => {

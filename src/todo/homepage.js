@@ -1,9 +1,11 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Keyboard } from 'react-native'
-import React, { useState , useEffect, useContext } from 'react';
-import Task from '../components/Task';
+import React, { useState , useEffect, useContext, createContext } from 'react';
+import QuickTask from '../components/QuickTask';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../navigation/AuthProvider';
+
+export const TaskContext = createContext()
 
 const HomePage = () => {
     const {user} = useContext(AuthContext);
@@ -19,9 +21,9 @@ const HomePage = () => {
       });
       setTask('');
       setLoading(true)
-      Keyboard.dismiss
+      Keyboard.dismiss()
     }
-
+    <TaskContext.Provider value={{tasks,setTasks}}></TaskContext.Provider>
     const fetchTasks = async () => {
        TasksRef.where('userID', '==' , user.uid).get().then(querySnapshot => {
         const list = [];
@@ -48,13 +50,13 @@ const HomePage = () => {
 
     return (
     <View style = {styles.container}>
-      <Text style = {{ fontSize : 35, fontWeight : 'bold', color : '#000000', marginBottom : 10}}>
-        Your Tasks
+      <Text style = {{ fontSize : 35, fontWeight : 'bold', color : '#000000', marginVertical : 10, paddingHorizontal: 25}}>
+        Quick Tasks
       </Text>
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Task {...item} />}
+        renderItem={({ item }) => <QuickTask {...item} />}
       />
       <View style = { styles.newTaskContainer}>
         <TextInput placeholder='Enter a Task' style = {styles.newTask} value={task} onChangeText={setTask} ></TextInput>
